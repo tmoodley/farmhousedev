@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging; 
+using Microsoft.Extensions.Logging;
 using FarmHouseDeliveryApp.Data;
 using FarmHouseDeliveryApp.Models;
 using FarmHouseDeliveryApp.Services;
+using Microsoft.AspNetCore.Routing;
 
 namespace FarmHouseDeliveryApp
 {
@@ -94,13 +95,15 @@ namespace FarmHouseDeliveryApp
 
                 routes.MapRoute(
                    name: "Category SEOFriendlyRoute",
-                   template: "c/{*url}");
+                   template: "c/{*url}",
+                   defaults: new { controller = "C", action = "details" });
 
                 routes.MapRoute(
                    name: "Departments SEOFriendlyRoute",
-                   template: "d/{*url}");
+                   template: "d/{*url}",
+                   defaults: new { controller = "D", action = "details" });
 
-              
+
             });
         }
     }

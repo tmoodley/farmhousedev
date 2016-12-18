@@ -27,20 +27,20 @@ namespace FarmHouseDeliveryApp.Controllers
         }
 
         // GET: C/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string url)
         {
-            if (id == null)
+            if (url == null)
+            {
+                return NotFound();
+            }
+            var _url = url.Replace("/", "");
+            var products = await _context.Product.Where(m => m.Categories.Url == _url).ToListAsync();
+            if (products == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Category.SingleOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
+            return View(products);
         }
 
         // GET: C/Create

@@ -29,7 +29,8 @@ namespace FarmHouseDeliveryApp.Controllers
         // GET: P/Details/5
         public IActionResult Details(string url)
         {
-            var product = _context.Product.Single(x => x.Url == url);
+            var _url = url.Replace("/", "");
+            var product = _context.Product.Single(x => x.Url == _url);
 
             if (product == null)
             {
