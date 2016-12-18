@@ -8,9 +8,10 @@ using FarmHouseDeliveryApp.Data;
 namespace FarmHouseDeliveryApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161218091835_added url rewrite module.")]
+    partial class addedurlrewritemodule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")
@@ -152,8 +153,6 @@ namespace FarmHouseDeliveryApp.Data.Migrations
                     b.Property<string>("Title");
 
                     b.Property<DateTime>("UpdateDate");
-
-                    b.Property<string>("Url");
 
                     b.HasKey("Id");
 

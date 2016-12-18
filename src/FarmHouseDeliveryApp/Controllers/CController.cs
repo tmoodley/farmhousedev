@@ -10,23 +10,23 @@ using FarmHouseDeliveryApp.Models;
 
 namespace FarmHouseDeliveryApp.Controllers
 {
-    public class ProductsController : Controller
+    public class CController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductsController(ApplicationDbContext context)
+        public CController(ApplicationDbContext context)
         {
             _context = context;    
         }
 
-        // GET: Products
+        // GET: C
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Product.Include(p => p.Categories);
+            var applicationDbContext = _context.Category.Include(c => c.Departments);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Products/Details/5
+        // GET: C/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,40 +34,40 @@ namespace FarmHouseDeliveryApp.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product.SingleOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            var category = await _context.Category.SingleOrDefaultAsync(m => m.Id == id);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(category);
         }
 
-        // GET: Products/Create
+        // GET: C/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name");
+            ViewData["DepartmentId"] = new SelectList(_context.Department, "Id", "Departments");
             return View();
         }
 
-        // POST: Products/Create
+        // POST: C/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Body,CategoryId,Cost,Description,H1,Url,Image,Keywords,Name,Price,ShortDescription,Thumbnail,Title,UpdateDate")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,Body,DepartmentId,Description,H1,Image,Keywords,Name,Title,UpdateDate")] Category category)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+                _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", product.CategoryId);
-            return View(product);
+            ViewData["DepartmentId"] = new SelectList(_context.Department, "Id", "Departments", category.DepartmentId);
+            return View(category);
         }
 
-        // GET: Products/Edit/5
+        // GET: C/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,23 +75,23 @@ namespace FarmHouseDeliveryApp.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product.SingleOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            var category = await _context.Category.SingleOrDefaultAsync(m => m.Id == id);
+            if (category == null)
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", product.CategoryId);
-            return View(product);
+            ViewData["DepartmentId"] = new SelectList(_context.Department, "Id", "Departments", category.DepartmentId);
+            return View(category);
         }
 
-        // POST: Products/Edit/5
+        // POST: C/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Body,CategoryId,Cost,Description,Url,H1,Image,Keywords,Name,Price,ShortDescription,Thumbnail,Title,UpdateDate")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Body,DepartmentId,Description,H1,Image,Keywords,Name,Title,UpdateDate")] Category category)
         {
-            if (id != product.Id)
+            if (id != category.Id)
             {
                 return NotFound();
             }
@@ -100,12 +100,12 @@ namespace FarmHouseDeliveryApp.Controllers
             {
                 try
                 {
-                    _context.Update(product);
+                    _context.Update(category);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
+                    if (!CategoryExists(category.Id))
                     {
                         return NotFound();
                     }
@@ -116,11 +116,11 @@ namespace FarmHouseDeliveryApp.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", product.CategoryId);
-            return View(product);
+            ViewData["DepartmentId"] = new SelectList(_context.Department, "Id", "Departments", category.DepartmentId);
+            return View(category);
         }
 
-        // GET: Products/Delete/5
+        // GET: C/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -128,29 +128,29 @@ namespace FarmHouseDeliveryApp.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product.SingleOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            var category = await _context.Category.SingleOrDefaultAsync(m => m.Id == id);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(category);
         }
 
-        // POST: Products/Delete/5
+        // POST: C/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Product.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Product.Remove(product);
+            var category = await _context.Category.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Category.Remove(category);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
-        private bool ProductExists(int id)
+        private bool CategoryExists(int id)
         {
-            return _context.Product.Any(e => e.Id == id);
+            return _context.Category.Any(e => e.Id == id);
         }
     }
 }

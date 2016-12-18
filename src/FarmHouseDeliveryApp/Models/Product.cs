@@ -20,6 +20,7 @@ namespace FarmHouseDeliveryApp.Models
         public double Cost { get; set; }
         public double Price { get; set; }
         public bool IsPromo { get; set; }
+        public string Url { get; set; }
 
         public int CategoryId { get; set; } 
         public Category Categories { get; set; }

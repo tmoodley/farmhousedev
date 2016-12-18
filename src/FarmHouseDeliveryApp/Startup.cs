@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging; 
 using FarmHouseDeliveryApp.Data;
 using FarmHouseDeliveryApp.Models;
 using FarmHouseDeliveryApp.Services;
@@ -51,6 +51,7 @@ namespace FarmHouseDeliveryApp
 
             //services.AddScoped(ICategoryService, CategoryService);
 
+
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -76,11 +77,25 @@ namespace FarmHouseDeliveryApp
             app.UseStaticFiles();
 
             app.UseIdentity();
+             
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>
-            {
+            {   
+                routes.MapRoute(
+                  name: "Product",
+                  template: "p/{*url}",
+                  defaults: new { controller = "P", action = "details" });
+
+                routes.MapRoute(
+                   name: "Category SEOFriendlyRoute",
+                   template: "c/{*url}");
+
+                routes.MapRoute(
+                   name: "Departments SEOFriendlyRoute",
+                   template: "d/{*url}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

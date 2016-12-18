@@ -1,4 +1,4 @@
-@model FarmHouseDeliveryApp.Models.Product
+@model FarmHouseDeliveryApp.Models.Department
 
 @{
     ViewData["Title"] = "Edit";
@@ -8,7 +8,7 @@
 
 <form asp-action="Edit">
     <div class="form-horizontal">
-        <h4>Product</h4>
+        <h4>Department</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="Id" />
@@ -17,20 +17,6 @@
             <div class="col-md-10">
                 <input asp-for="Body" class="form-control" />
                 <span asp-validation-for="Body" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="CategoryId" class="control-label col-md-2"></label>
-            <div class="col-md-10">
-                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
-                <span asp-validation-for="CategoryId" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Cost" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Cost" class="form-control" />
-                <span asp-validation-for="Cost" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
@@ -66,34 +52,6 @@
             <div class="col-md-10">
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Url" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Url" class="form-control" />
-                <span asp-validation-for="Url" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Price" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="ShortDescription" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="ShortDescription" class="form-control" />
-                <span asp-validation-for="ShortDescription" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Thumbnail" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Thumbnail" class="form-control" />
-                <span asp-validation-for="Thumbnail" class="text-danger" />
             </div>
         </div>
         <div class="form-group">

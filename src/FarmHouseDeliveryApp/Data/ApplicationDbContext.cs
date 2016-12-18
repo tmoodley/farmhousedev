@@ -17,6 +17,7 @@ namespace FarmHouseDeliveryApp.Data
         public DbSet<Department> Department { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Product> Product { get; set; }
+        public DbSet<UrlRewrite> UrlRewrite { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

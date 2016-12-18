@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+<system.webServer>
+<rewrite>
+  <rules>
+    <clear />
+    <rule name="categoryUrlId" enabled="true" stopProcessing="true">
+      <match url="^.*_([0-9]+)_ctg.htm?$" />
+      <conditions logicalGrouping="MatchAll" trackAllCaptures="false" />
+      <action type="Rewrite" url="/Category/{R:1}" />
+    </rule>
+    <rule name="catdeptpage" stopProcessing="true">
+      <match url="^.*_([0-9]+)_ctg.htm?.*.page=([0-9]+)?$" />
+      <conditions logicalGrouping="MatchAll" trackAllCaptures="false" />
+      <action type="Rewrite" url="/category.aspx?category_id={R:1}&amp;amp;page={R:2}" />
+    </rule>
+    <rule name="productUrl" enabled="true" stopProcessing="true">
+      <match url="^(http://.*.+)/([^/]+)$" />
+      <conditions logicalGrouping="MatchAll" trackAllCaptures="false" />
+      <action type="Rewrite" url="/Category.aspx?url={R:2}" />
+    </rule>
+
+
+    <rule name="admin parent pages" stopProcessing="true">
+      <match url="^.*-ap([0-9]+).html?$" />
+      <conditions logicalGrouping="MatchAll" trackAllCaptures="false" />
+      <action type="Rewrite" url="/admin/admin_parent.aspx?MenuItemId={R:1}" />
+    </rule>
+    <rule name="admin sub menu pages" stopProcessing="true">
+      <match url="^.*-ap([0-9]+)-.*-ac([0-9]+).html?$" />
+      <conditions logicalGrouping="MatchAll" trackAllCaptures="false" />
+      <action type="Rewrite" url="/admin/admin_parent.aspx?MenuItemId={R:1}&amp;SubMenuItemId={R:2}" />
+    </rule>
+    <rule name="department pages" stopProcessing="true">
+      <match url="^.*-d([0-9]+).html?$" />
+      <conditions logicalGrouping="MatchAll" trackAllCaptures="false" />
+      <action type="Rewrite" url="/Catalog.aspx?department_id={R:1}" />
+    </rule>
+    <rule name="department sub pages" stopProcessing="true">
+      <match url="^.*-d([0-9]+)-page-([0-9]+).html?$" />
+      <conditions logicalGrouping="MatchAll" trackAllCaptures="false" />
+      <action type="Rewrite" url="/Catalog.aspx?department_id={R:1}&amp;Page={R:2}" />
+    </rule>
+    <rule name="catdept" stopProcessing="true">
+      <match url="^.*-d([0-9]+)-.*-c([0-9]+).html?$" />
+      <conditions logicalGrouping="MatchAll" trackAllCaptures="false" />
+      <action type="Rewrite" url="/Catalog.aspx?department_id={R:1}&amp;amp;category_id={R:2}" />
+    </rule>
+  </rules>
+</rewrite>
+</system.webServer>
+</configuration>

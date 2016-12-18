@@ -21,5 +21,9 @@
     <DnxInvisibleContent Include="package.json" />
     <DnxInvisibleContent Include=".npmrc" />
   </ItemGroup>
+  <ItemGroup>
+    <DnxInvisibleCompile Include="Helpers\CatalogAccess.cs" />
+    <DnxInvisibleCompile Include="Helpers\Link.cs" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\DotNet.Web\Microsoft.DotNet.Web.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>
