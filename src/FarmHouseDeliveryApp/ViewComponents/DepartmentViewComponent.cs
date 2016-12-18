@@ -1,4 +1,5 @@
 ﻿using FarmHouseDeliveryApp.Data;
+using FarmHouseDeliveryApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,19 @@ namespace FarmHouseDeliveryApp.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            return View(_context.Department.ToList());
+            List<DepartmentViewModel> deptViewModel = new List<DepartmentViewModel>();
+            var depts = _context.Department.ToList();
+            foreach (var dept in depts)
+            {
+                DepartmentViewModel dvm = new DepartmentViewModel();
+                dvm.Name = dept.Name;
+                dvm.Description = dept.Description;
+                dvm.Categories = _context.Category.Where(x => x.DepartmentId == dept.Id).ToList();
+
+                deptViewModel.Add(dvm);
+                
+            }
+            return View(deptViewModel);
         }
     }
 }
