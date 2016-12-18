@@ -26,6 +26,7 @@ namespace FarmHouseDeliveryApp.ViewComponents
                 DepartmentViewModel dvm = new DepartmentViewModel();
                 dvm.Name = dept.Name;
                 dvm.Description = dept.Description;
+                dvm.Url = dept.Url;
                 dvm.Categories = _context.Category.Where(x => x.DepartmentId == dept.Id).ToList();
 
                 deptViewModel.Add(dvm);
