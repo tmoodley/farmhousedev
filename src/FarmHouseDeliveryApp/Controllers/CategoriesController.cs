@@ -57,7 +57,7 @@ namespace FarmHouseDeliveryApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Body,DepartmentId,Description,H1,Image,Keywords,Name,Title,UpdateDate")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,Body,DepartmentId,Description,H1,Url,Image,Keywords,Name,Title,UpdateDate")] Category category)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace FarmHouseDeliveryApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Body,DepartmentId,Description,H1,Image,Keywords,Name,Title,UpdateDate")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Body,DepartmentId,Description,Url,H1,Image,Keywords,Name,Title,UpdateDate")] Category category)
         {
             if (id != category.Id)
             {
