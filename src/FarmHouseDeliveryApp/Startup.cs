@@ -51,7 +51,7 @@ namespace FarmHouseDeliveryApp
             services.AddMvc();
 
             //services.AddScoped(ICategoryService, CategoryService);
-
+            services.AddSession();
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -78,7 +78,9 @@ namespace FarmHouseDeliveryApp
             app.UseStaticFiles();
 
             app.UseIdentity();
-             
+
+            // IMPORTANT: This session call MUST go before UseMvc()
+            app.UseSession();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 

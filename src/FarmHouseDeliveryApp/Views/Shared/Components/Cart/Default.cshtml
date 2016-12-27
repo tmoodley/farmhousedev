@@ -1,0 +1,15 @@
+@model FarmHouseDeliveryApp.ViewModels.CartViewModel
+
+<div class="last"> 
+    @if (Model.CartItems != null)
+    {
+        <h4>Shopping Cart (@Model.CartItems.Count)</h4>
+        <a href="/Cart/" class="button">@Model.CartItems.Count item(s) - $@Model.Total</a>
+    }
+    else
+    {
+        <h4>Shopping Cart (0)</h4>
+        <a href="/Cart/" class="button">0 item(s)</a> 
+    }
+</div>
+

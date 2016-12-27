@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet-FarmHouseDeliveryApp-65c12685-0edb-4378-bd99-ee04f287528e",
 
   "dependencies": {
@@ -37,7 +37,8 @@
     "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
       "version": "1.0.0-preview1-final",
       "type": "build"
-    }
+    },
+    "Microsoft.AspNetCore.Session": "1.0.0-rc2-final"
   },
 
   "tools": {

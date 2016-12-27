@@ -18,7 +18,7 @@ namespace FarmHouseDeliveryApp.Data
         public DbSet<Category> Category { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<UrlRewrite> UrlRewrite { get; set; }
-
+        public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

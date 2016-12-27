@@ -8,9 +8,10 @@ using FarmHouseDeliveryApp.Data;
 namespace FarmHouseDeliveryApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161227145443_added cartid to shoppingcartitme")]
+    partial class addedcartidtoshoppingcartitme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")
