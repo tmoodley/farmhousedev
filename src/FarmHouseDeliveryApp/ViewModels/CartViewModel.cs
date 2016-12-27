@@ -8,6 +8,7 @@ namespace FarmHouseDeliveryApp.ViewModels
 {
     public class CartViewModel
     { 
+        public Guid Id { get; set; }
         public double Total { get; set; }
         public Guid CartId { get; set; }
         public List<CartItemViewModel> CartItems { get; set; }

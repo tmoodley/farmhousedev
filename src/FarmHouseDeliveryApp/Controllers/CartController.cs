@@ -35,6 +35,7 @@ namespace FarmHouseDeliveryApp.Controllers
                 Product prod = _context.Product.Where(x => x.Id == product.ProductId).FirstOrDefault();
          
                 CartItemViewModel civm = new CartItemViewModel();
+                civm.Id = product.Id;
                 civm.Product = prod;
                 civm.Quantity = product.Quantity;
                 civm.SubTotal = product.Quantity * prod.Price;
@@ -96,29 +97,13 @@ namespace FarmHouseDeliveryApp.Controllers
             }
             return View(shoppingCartItem);
         }
-
-        // GET: Cart/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var shoppingCartItem = await _context.ShoppingCartItem.SingleOrDefaultAsync(m => m.Id == id);
-            if (shoppingCartItem == null)
-            {
-                return NotFound();
-            }
-            return View(shoppingCartItem);
-        }
+ 
 
         // POST: Cart/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ProductId,Quantity")] ShoppingCartItem shoppingCartItem)
+        [HttpPost] 
+        public async Task<IActionResult> Update(Guid id, [Bind("Id,CartId,ProductId,Quantity")] ShoppingCartItem shoppingCartItem)
         {
             if (id != shoppingCartItem.Id)
             {
@@ -148,27 +133,11 @@ namespace FarmHouseDeliveryApp.Controllers
             return View(shoppingCartItem);
         }
 
-        // GET: Cart/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var shoppingCartItem = await _context.ShoppingCartItem.SingleOrDefaultAsync(m => m.Id == id);
-            if (shoppingCartItem == null)
-            {
-                return NotFound();
-            }
-
-            return View(shoppingCartItem);
-        }
+    
 
         // POST: Cart/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        [HttpPost, ActionName("Delete")] 
+        public async Task<IActionResult> Delete(Guid id)
         {
             var shoppingCartItem = await _context.ShoppingCartItem.SingleOrDefaultAsync(m => m.Id == id);
             _context.ShoppingCartItem.Remove(shoppingCartItem);
