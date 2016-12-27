@@ -14,6 +14,7 @@ namespace FarmHouseDeliveryApp.ViewComponents
     public class CartViewComponent : ViewComponent
     {
         private readonly ApplicationDbContext _context;
+ 
 
         public CartViewComponent(ApplicationDbContext context)
         {
@@ -36,12 +37,13 @@ namespace FarmHouseDeliveryApp.ViewComponents
                 civm.Product = prod;
                 civm.Quantity = product.Quantity;
                 civm.SubTotal = product.Quantity * prod.Price;
+                cvm.CartItems = new List<CartItemViewModel>();
                 cvm.CartItems.Add(civm); 
             }
              
             return View(cvm);
         }
-
+         
         public Guid SaveKey(HttpContext httpContext)
         {
             const string sessionKey = "cart_id";

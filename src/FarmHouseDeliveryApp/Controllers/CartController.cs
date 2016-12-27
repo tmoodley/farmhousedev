@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FarmHouseDeliveryApp.Data;
 using FarmHouseDeliveryApp.Models;
+using FarmHouseDeliveryApp.ViewComponents;
+using FarmHouseDeliveryApp.ViewModels;
 
 namespace FarmHouseDeliveryApp.Controllers
 {
@@ -20,9 +22,28 @@ namespace FarmHouseDeliveryApp.Controllers
         }
 
         // GET: Cart
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.ShoppingCartItem.ToListAsync());
+            var cartId = new CartViewComponent(_context).SaveKey(HttpContext);
+            var products = _context.ShoppingCartItem.Where(x => x.CartId == cartId).ToList();
+
+            CartViewModel cvm = new CartViewModel();
+            cvm.CartId = cartId;
+            double total = 0.00; ;
+            foreach (var product in products)
+            {
+                Product prod = _context.Product.Where(x => x.Id == product.ProductId).FirstOrDefault();
+         
+                CartItemViewModel civm = new CartItemViewModel();
+                civm.Product = prod;
+                civm.Quantity = product.Quantity;
+                civm.SubTotal = product.Quantity * prod.Price;
+                total += civm.SubTotal;
+                cvm.CartItems = new List<CartItemViewModel>();
+                cvm.CartItems.Add(civm);
+            }
+            cvm.Total = total;
+            return View(cvm);
         }
 
         // GET: Cart/Details/5
@@ -51,15 +72,26 @@ namespace FarmHouseDeliveryApp.Controllers
         // POST: Cart/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProductId,Quantity")] ShoppingCartItem shoppingCartItem)
+        [HttpPost] 
+        public async Task<IActionResult> Add([Bind("Id,ProductId,Quantity")] ShoppingCartItem shoppingCartItem)
         {
             if (ModelState.IsValid)
             {
-                shoppingCartItem.Id = Guid.NewGuid();
-                _context.Add(shoppingCartItem);
-                await _context.SaveChangesAsync();
+                shoppingCartItem.DateCreated = DateTime.Now;
+                shoppingCartItem.CartId = new CartViewComponent(_context).SaveKey(HttpContext);
+                var cartItem = await _context.ShoppingCartItem.Where(m => m.CartId == shoppingCartItem.CartId).Where(y => y.ProductId == shoppingCartItem.ProductId).ToListAsync();
+                
+                if (cartItem.Count <= 0)
+                {
+                    _context.Add(shoppingCartItem);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    _context.Update(shoppingCartItem);
+                    await _context.SaveChangesAsync();
+                } 
+
                 return RedirectToAction("Index");
             }
             return View(shoppingCartItem);
