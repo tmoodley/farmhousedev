@@ -12,6 +12,13 @@ html, body{
 nav.navbar.nav_bottom {
     background: #f5f5f5;
 }
+td.actions {
+    display: inline-flex;
+}
+
+button.btn.btn-success.btn-sm {  
+    margin-right: 20px;
+}
 ul li,ol li{
 	font-size:14px;
 }

@@ -8,9 +8,10 @@ using FarmHouseDeliveryApp.Data;
 namespace FarmHouseDeliveryApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161228022230_added delivery options")]
+    partial class addeddeliveryoptions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")
@@ -178,28 +179,6 @@ namespace FarmHouseDeliveryApp.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Product");
-                });
-
-            modelBuilder.Entity("FarmHouseDeliveryApp.Models.RecurringCartItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("CustomerId");
-
-                    b.Property<DateTime>("DateAdded");
-
-                    b.Property<int>("DeliveryOptionId");
-
-                    b.Property<int>("ProductId");
-
-                    b.Property<int>("Quantity");
-
-                    b.Property<DateTime>("UpdateDate");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RecurringCartItem");
                 });
 
             modelBuilder.Entity("FarmHouseDeliveryApp.Models.ShoppingCartItem", b =>
