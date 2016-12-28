@@ -43,7 +43,7 @@
             </td>
             <td data-th="Subtotal" class="text-center">@item.SubTotal</td>
             <td class="actions" data-th=""> 
-                    <button class="btn btn-danger btn-sm" type="submit" form="formupdate@item.Product.Id" value="Submit"><i class="fa fa-refresh"></i></button>  
+                    <button class="btn btn-success btn-sm" type="submit" form="formupdate@item.Product.Id" value="Submit"><i class="fa fa-refresh"></i></button>  
                <form action="/cart/delete" method="post" id="formdelete@item.Product.Id">
                     <input type="hidden" name="ProductId" value="@item.Product.Id"> 
                     <input type="hidden" name="id" value="@item.Id"> 
