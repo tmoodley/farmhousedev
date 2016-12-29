@@ -1900,12 +1900,7 @@ p.animi{
 	position: relative;
 	overflow: hidden;
 }
-.wmuSlider .wmuSliderWrapper article img {
-	/*--max-width: 100%;
-	width: auto;
-	height: auto;
-	display:block;--*/
-}
+ 
 /* Default Skin */
 .wmuSliderPagination {
 	z-index: 2;
@@ -4287,7 +4282,7 @@ ul.wmuSliderPagination {
 }
 @media screen and (max-width: 600px) {
     table#cart tbody td .form-control{
-		width:20%;
+		 
 		display: inline !important;
 	}
 	.actions .btn{

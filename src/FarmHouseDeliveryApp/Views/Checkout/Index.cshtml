@@ -1,0 +1,24 @@
+@model FarmHouseDeliveryApp.Models.DeliveryOption
+
+@{
+    ViewData["Title"] = "Index";
+}
+@section Header {
+    <form asp-action="Index">
+        <div class="form-horizontal">
+            <h4>Delivery Option</h4>
+            <hr /> 
+            <div class="form-group">
+                <label asp-for="Id" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <select asp-for="Id" class="form-control" asp-items="ViewBag.DeliveryOptionId"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Next" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+}
