@@ -1,0 +1,80 @@
+@model FarmHouseDeliveryApp.ViewModels.RecurringCartViewModel
+   
+@{
+    ViewData["Title"] = "Recurring Cart";
+}
+@section Header {
+    <h1>Recurring Cart</h1>
+    @if (Model.CartItems != null)
+    {
+
+        <table id="cart" class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:30%">Product</th>
+                    <th style="width:20%">Delivery Option</th>
+                    <th style="width:10%">Price</th>
+                    <th style="width:8%">Quantity</th>
+                    <th style="width:22%" class="text-center">Subtotal</th>
+                    <th style="width:10%"></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model.CartItems)
+                {
+
+                    <tr>
+                        <td data-th="Product">
+                            <div class="row">
+                                <div class="col-sm-2 hidden-xs"><img src="/ProductImages/@item.Product.Image" alt="@item.Product.Title" class="img-responsive" /></div>
+                                <div class="col-sm-10">
+                                    <h4 class="nomargin">@item.Product.Name</h4>
+                                    <p>@item.Product.ShortDescription</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-th="Delivery Option">@item.DeliveryOption.Name</td>
+                        <td data-th="Price">$@item.Product.Price</td>
+                        <td data-th="Quantity">
+                            <form action="/cart/update" method="post" id="formupdate@item.Product.Id">
+                                <input type="hidden" name="ProductId" value="@item.Product.Id">
+                                <input type="hidden" name="Id" value="@item.Id">
+                                <input type="hidden" name="CartId" value="@Model.CartId">
+                                <input type="number" name="Quantity" class="form-control text-center" value="@item.Quantity">
+                            </form>
+                        </td>
+                        <td data-th="Subtotal" class="text-center">@item.SubTotal</td>
+                        <td class="actions" data-th="">
+                            <button class="btn btn-success btn-sm" type="submit" form="formupdate@item.Product.Id" value="Submit"><i class="fa fa-refresh"></i></button>
+                            <form action="/cart/delete" method="post" id="formdelete@item.Product.Id">
+                                <input type="hidden" name="ProductId" value="@item.Product.Id">
+                                <input type="hidden" name="id" value="@item.Id">
+                                <button class="btn btn-danger btn-sm" type="submit" form="formdelete@item.Product.Id"><i class="fa fa-trash-o"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+            <tfoot>
+                <tr class="visible-xs">
+                    <td class="text-center"><strong>Total @Model.Total</strong></td>
+                </tr>
+                <tr>
+                    <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                    <td colspan="2" class="hidden-xs"></td>
+                    <td class="hidden-xs text-center"><strong>Total $@Model.Total</strong></td>
+                    <td><a href="/checkout/" class="btn btn-success btn-block">Continue <i class="fa fa-angle-right"></i></a></td>
+                </tr>
+            </tfoot>
+        </table>
+
+    }
+    else
+    {
+
+        <h1>Cart is empty</h1>
+
+    }
+}

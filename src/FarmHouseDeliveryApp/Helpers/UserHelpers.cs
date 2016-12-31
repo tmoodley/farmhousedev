@@ -13,15 +13,22 @@ namespace FarmHouseDeliveryApp.Helpers
     {
         public static string GetUserId(this IPrincipal principal)
         {
-            var claimsIdentity = (ClaimsIdentity)principal.Identity;
-            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-            return claim.Value;
+            try
+            {
+                var claimsIdentity = (ClaimsIdentity)principal.Identity;
+                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+                return claim.Value;
+            }
+            catch
+            {
+                return null;
+            }
+        
         }
 
         public static Guid GetKey(HttpContext httpContext, IPrincipal principal)
         {
-            //check if User is signed in
-             
+            //check if User is signed in             
             var userId = GetUserId(principal);
             if (string.IsNullOrEmpty(userId))
             {

@@ -31,20 +31,23 @@ namespace FarmHouseDeliveryApp.ViewComponents
             try
             {
                 var products = _context.ShoppingCartItem.Where(x => x.CartId == cartId).ToList();
-
+                 
                 cvm.CartId = cartId;
-
+                double total = 0.00; ;
                 foreach (var product in products)
                 {
                     Product prod = _context.Product.Where(x => x.Id == product.ProductId).FirstOrDefault();
-                    cvm.Total += prod.Price;
+
                     CartItemViewModel civm = new CartItemViewModel();
+                    civm.Id = product.Id;
                     civm.Product = prod;
                     civm.Quantity = product.Quantity;
                     civm.SubTotal = product.Quantity * prod.Price;
+                    total += civm.SubTotal;
                     cvm.CartItems = new List<CartItemViewModel>();
                     cvm.CartItems.Add(civm);
                 }
+                cvm.Total = total;
 
                 return View(cvm);
             }

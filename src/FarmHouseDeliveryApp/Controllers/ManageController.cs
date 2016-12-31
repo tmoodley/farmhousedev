@@ -9,6 +9,9 @@ using Microsoft.Extensions.Logging;
 using FarmHouseDeliveryApp.Models;
 using FarmHouseDeliveryApp.Models.ManageViewModels;
 using FarmHouseDeliveryApp.Services;
+using FarmHouseDeliveryApp.Helpers;
+using FarmHouseDeliveryApp.Data;
+using FarmHouseDeliveryApp.ViewModels;
 
 namespace FarmHouseDeliveryApp.Controllers
 {
@@ -20,19 +23,22 @@ namespace FarmHouseDeliveryApp.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
-
+        private readonly ApplicationDbContext _context;
+          
         public ManageController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IEmailSender emailSender,
         ISmsSender smsSender,
-        ILoggerFactory loggerFactory)
+        ILoggerFactory loggerFactory,
+        ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
+            _context = context;
         }
 
         //
@@ -86,6 +92,34 @@ namespace FarmHouseDeliveryApp.Controllers
         public IActionResult AddPhoneNumber()
         {
             return View();
+        }
+
+        // GET: /Manage/AddPhoneNumber
+        public IActionResult RecurringCart()
+        {
+            var cartId = UserHelpers.GetKey(HttpContext, this.User);
+            var products = _context.RecurringCartItem.Where(x => x.CustomerId == cartId).ToList();
+
+            RecurringCartViewModel cvm = new RecurringCartViewModel();
+            cvm.CartItems = new List<RecurringCartItemViewModel>();
+            cvm.CartId = cartId;
+            double total = 0.00; ;
+            foreach (var product in products)
+            {
+                Product prod = _context.Product.Where(x => x.Id == product.ProductId).FirstOrDefault();
+
+                RecurringCartItemViewModel civm = new RecurringCartItemViewModel();
+                civm.Id = product.Id;
+                civm.Product = prod;
+                civm.Quantity = product.Quantity;
+                civm.SubTotal = product.Quantity * prod.Price;
+                civm.DeliveryOption = _context.DeliveryOption.Where(x => x.Id == product.DeliveryOptionId).First();
+                total += civm.SubTotal;
+             
+                cvm.CartItems.Add(civm);
+            }
+            cvm.Total = total;
+            return View(cvm);
         }
 
         //

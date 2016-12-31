@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using FarmHouseDeliveryApp.Helpers;
+using FarmHouseDeliveryApp.ViewModels;
 
 namespace FarmHouseDeliveryApp.Controllers
 {
@@ -44,11 +45,11 @@ namespace FarmHouseDeliveryApp.Controllers
             {
                 AddProuctToRecurring(product, id);
             }
-         
-            return View();
+
+            return RedirectToAction("Create");
         }
 
-        private async void AddProuctToRecurring(ShoppingCartItem product, int deliveryOptionId)
+        private void AddProuctToRecurring(ShoppingCartItem product, int deliveryOptionId)
         {
             System.Security.Claims.ClaimsPrincipal currentUser = this.User;
             var email = currentUser.Identity.Name;
@@ -67,8 +68,8 @@ namespace FarmHouseDeliveryApp.Controllers
             {
                 recurringCartItem.Id = Guid.NewGuid();
                 _context.Add(recurringCartItem);
-                await _context.SaveChangesAsync(); 
-            } 
+                _context.SaveChanges();
+            }
         }
 
         // GET: Checkout/Details/5
@@ -80,7 +81,28 @@ namespace FarmHouseDeliveryApp.Controllers
         // GET: Checkout/Create
         public ActionResult Create()
         {
-            return View();
+            var cartId = UserHelpers.GetKey(HttpContext, this.User);
+            var products = _context.RecurringCartItem.Where(x => x.CustomerId == cartId).ToList();
+
+            RecurringCartViewModel cvm = new RecurringCartViewModel();
+            cvm.CartId = cartId;
+            double total = 0.00; ;
+            foreach (var product in products)
+            {
+                Product prod = _context.Product.Where(x => x.Id == product.ProductId).FirstOrDefault();
+
+                RecurringCartItemViewModel civm = new RecurringCartItemViewModel();
+                civm.Id = product.Id;
+                civm.Product = prod;
+                civm.Quantity = product.Quantity;
+                civm.SubTotal = product.Quantity * prod.Price;
+                civm.DeliveryOption = _context.DeliveryOption.Where(x => x.Id == product.DeliveryOptionId).First();
+                total += civm.SubTotal;
+                cvm.CartItems = new List<RecurringCartItemViewModel>();
+                cvm.CartItems.Add(civm);
+            }
+            cvm.Total = total;
+            return View(cvm);
         }
 
         // POST: Checkout/Create
