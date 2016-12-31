@@ -37,7 +37,7 @@ namespace FarmHouseDeliveryApp.Controllers
         public ActionResult Index(int id)
         {
             //Add to Recurring Items
-            var cartId = new CartViewComponent(_context).SaveKey(HttpContext);
+            var cartId = UserHelpers.GetKey(HttpContext, this.User);
             var products = _context.ShoppingCartItem.Where(x => x.CartId == cartId).ToList();
 
             foreach(var product in products)

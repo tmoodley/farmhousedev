@@ -9,6 +9,7 @@ using FarmHouseDeliveryApp.Data;
 using FarmHouseDeliveryApp.Models;
 using FarmHouseDeliveryApp.ViewComponents;
 using FarmHouseDeliveryApp.ViewModels;
+using FarmHouseDeliveryApp.Helpers;
 
 namespace FarmHouseDeliveryApp.Controllers
 {
@@ -24,7 +25,7 @@ namespace FarmHouseDeliveryApp.Controllers
         // GET: Cart
         public IActionResult Index()
         {
-            var cartId = new CartViewComponent(_context).SaveKey(HttpContext);
+            var cartId = UserHelpers.GetKey(HttpContext, this.User);
             var products = _context.ShoppingCartItem.Where(x => x.CartId == cartId).ToList();
 
             CartViewModel cvm = new CartViewModel();
@@ -79,7 +80,7 @@ namespace FarmHouseDeliveryApp.Controllers
             if (ModelState.IsValid)
             {
                 shoppingCartItem.DateCreated = DateTime.Now;
-                shoppingCartItem.CartId = new CartViewComponent(_context).SaveKey(HttpContext);
+                shoppingCartItem.CartId = UserHelpers.GetKey(HttpContext, this.User);
                 var cartItem = await _context.ShoppingCartItem.Where(m => m.CartId == shoppingCartItem.CartId).Where(y => y.ProductId == shoppingCartItem.ProductId).ToListAsync();
                 
                 if (cartItem.Count <= 0)

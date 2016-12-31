@@ -1,4 +1,5 @@
 ﻿using FarmHouseDeliveryApp.Data;
+using FarmHouseDeliveryApp.Helpers;
 using FarmHouseDeliveryApp.Models;
 using FarmHouseDeliveryApp.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -23,47 +24,36 @@ namespace FarmHouseDeliveryApp.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var cartId = SaveKey(HttpContext);
-            var products = _context.ShoppingCartItem.Where(x => x.CartId == cartId).ToList();
+            var cartId = UserHelpers.GetKey(HttpContext, this.User);
 
             CartViewModel cvm = new CartViewModel();
-            cvm.CartId = cartId;
-             
-            foreach(var product in products)
+
+            try
             {
-                Product prod = _context.Product.Where(x => x.Id == product.ProductId).FirstOrDefault();
-                cvm.Total += prod.Price;
-                CartItemViewModel civm = new CartItemViewModel();
-                civm.Product = prod;
-                civm.Quantity = product.Quantity;
-                civm.SubTotal = product.Quantity * prod.Price;
-                cvm.CartItems = new List<CartItemViewModel>();
-                cvm.CartItems.Add(civm); 
+                var products = _context.ShoppingCartItem.Where(x => x.CartId == cartId).ToList();
+
+                cvm.CartId = cartId;
+
+                foreach (var product in products)
+                {
+                    Product prod = _context.Product.Where(x => x.Id == product.ProductId).FirstOrDefault();
+                    cvm.Total += prod.Price;
+                    CartItemViewModel civm = new CartItemViewModel();
+                    civm.Product = prod;
+                    civm.Quantity = product.Quantity;
+                    civm.SubTotal = product.Quantity * prod.Price;
+                    cvm.CartItems = new List<CartItemViewModel>();
+                    cvm.CartItems.Add(civm);
+                }
+
+                return View(cvm);
             }
-             
-            return View(cvm);
+            catch  
+            {
+                return View(cvm);
+            }
+           
         }
-         
-        public Guid SaveKey(HttpContext httpContext)
-        {
-            const string sessionKey = "cart_id";
-            const string dateSeenKey = "dateSeen";
-            DateTime dateFirstSeen;
-            var value = httpContext.Session.GetString(sessionKey);
-            if (string.IsNullOrEmpty(value))
-            {
-                dateFirstSeen = DateTime.Now;
-                var serialisedDate = JsonConvert.SerializeObject(dateFirstSeen);
-                httpContext.Session.SetString(dateSeenKey, serialisedDate);
-                var cart_id = Guid.NewGuid().ToString();
-                httpContext.Session.SetString(sessionKey, cart_id);
-                return new Guid(cart_id);
-            }
-            else
-            {
-                var _guid = new Guid(value);
-                return _guid;
-            }
-        }
+          
     }
 }
