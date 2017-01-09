@@ -86,7 +86,8 @@ namespace FarmHouseDeliveryApp.Controllers
 
             RecurringCartViewModel cvm = new RecurringCartViewModel();
             cvm.CartId = cartId;
-            double total = 0.00; ;
+            double total = 0.00;
+            cvm.CartItems = new List<RecurringCartItemViewModel>();
             foreach (var product in products)
             {
                 Product prod = _context.Product.Where(x => x.Id == product.ProductId).FirstOrDefault();
@@ -98,7 +99,7 @@ namespace FarmHouseDeliveryApp.Controllers
                 civm.SubTotal = product.Quantity * prod.Price;
                 civm.DeliveryOption = _context.DeliveryOption.Where(x => x.Id == product.DeliveryOptionId).First();
                 total += civm.SubTotal;
-                cvm.CartItems = new List<RecurringCartItemViewModel>();
+                
                 cvm.CartItems.Add(civm);
             }
             cvm.Total = total;

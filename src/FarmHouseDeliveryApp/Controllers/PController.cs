@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FarmHouseDeliveryApp.Data;
 using FarmHouseDeliveryApp.Models;
+using FarmHouseDeliveryApp.ViewModels;
 
 namespace FarmHouseDeliveryApp.Controllers
 {
@@ -23,6 +24,7 @@ namespace FarmHouseDeliveryApp.Controllers
         public IActionResult Index(string id)
         {
             var product = _context.Product.SingleOrDefaultAsync(x => x.Url == id);
+           
             return View(product);
         }
 
@@ -37,7 +39,14 @@ namespace FarmHouseDeliveryApp.Controllers
                 return NotFound();
             }
 
-            return View(product);
+            var dept = _context.DeliveryOption;
+            var depts = new SelectList(dept, "Id", "Name");
+            ViewData["DeliveryOptionId"] = depts;
+
+            ProductViewModel pvm = new ProductViewModel();
+            pvm.Product = product;
+            
+            return View(pvm);
         }
 
         // GET: P/Create

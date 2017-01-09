@@ -1,4 +1,4 @@
-@model FarmHouseDeliveryApp.Models.Product
+@model FarmHouseDeliveryApp.ViewModels.ProductViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -7,23 +7,23 @@
 <div class="agileinfo_single">
     <h5>charminar pulao basmati rice 5 kg</h5>
     <div class="col-md-4 agileinfo_single_left">
-        <img id="example" src="~/ProductImages/@Model.Image" alt="@Model.Title" class="img-responsive">
+        <img id="example" src="~/ProductImages/@Model.Product.Image" alt="@Model.Product.Title" class="img-responsive">
     </div>
     <div class="col-md-8 agileinfo_single_right"> 
         <div class="w3agile_description">
             <h4>Description :</h4>
             <p>
-                @Model.Description
+                @Model.Product.Description
             </p>
         </div>
         <div class="snipcart-item block">
             <div class="snipcart-thumb agileinfo_single_right_snipcart">
-                <h4>$@Model.Price</h4>
+                <h4>$@Model.Product.Price</h4>
             </div>
             <div class="snipcart-details agileinfo_single_right_details">
                 <form action="/cart/add" method="post">
                     <fieldset>
-                        <input type="hidden" name="ProductId" value="@Model.Id">
+                        <input type="hidden" name="ProductId" value="@Model.Product.Id">
                         <span style="float: left;">Quantity:</span> <select name="Quantity" id="Quantity" style="float:left; display:block;">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -126,6 +126,7 @@
                             <option value="99">99</option>
                             <option value="100">100</option>
                             </select>
+                        <span style="float: left;">Delivery Options:</span> <select asp-for="DeliveryOptionsId" class="form-control" asp-items="ViewBag.DeliveryOptionId"></select>
                             <input type="submit" name="submit" value="Add to cart" class="button">
                     </fieldset>
                 </form>

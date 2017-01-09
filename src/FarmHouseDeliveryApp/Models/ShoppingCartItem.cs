@@ -9,6 +9,7 @@ namespace FarmHouseDeliveryApp.Models
     {
         public Guid Id { get; set; }
         public Guid CartId { get; set; }
+        public int DeliveryOptionId { get; set; }
         public int Quantity { get; set; }
         public int ProductId { get; set; }
         public DateTime DateCreated { get; set; }

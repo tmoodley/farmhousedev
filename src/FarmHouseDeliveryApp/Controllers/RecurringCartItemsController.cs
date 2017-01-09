@@ -115,33 +115,15 @@ namespace FarmHouseDeliveryApp.Controllers
             }
             return View(recurringCartItem);
         }
-
-        // GET: RecurringCartItems/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var recurringCartItem = await _context.RecurringCartItem.SingleOrDefaultAsync(m => m.Id == id);
-            if (recurringCartItem == null)
-            {
-                return NotFound();
-            }
-
-            return View(recurringCartItem);
-        }
-
+         
         // POST: RecurringCartItems/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        [HttpPost, ActionName("Delete")] 
+        public async Task<IActionResult> Delete(Guid id)
         {
             var recurringCartItem = await _context.RecurringCartItem.SingleOrDefaultAsync(m => m.Id == id);
             _context.RecurringCartItem.Remove(recurringCartItem);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create","Checkout");
         }
 
         private bool RecurringCartItemExists(Guid id)
