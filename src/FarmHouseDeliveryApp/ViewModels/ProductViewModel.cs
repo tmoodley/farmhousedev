@@ -9,6 +9,6 @@ namespace FarmHouseDeliveryApp.ViewModels
     public class ProductViewModel
     { 
         public Product Product { get; set; }
-        public int DeliveryOptionsId { get; set; } 
+        public int DeliveryOptionId { get; set; } 
     }
 }

@@ -10,6 +10,7 @@ namespace FarmHouseDeliveryApp.ViewModels
     { 
         public Guid Id { get; set; }
         public double SubTotal { get; set; }
+        public DeliveryOption DeliveryOption { get; set; }
         public int Quantity { get; set; } 
         public Product Product { get; set; }
     }

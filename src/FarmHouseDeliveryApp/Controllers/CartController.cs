@@ -40,6 +40,7 @@ namespace FarmHouseDeliveryApp.Controllers
                 civm.Product = prod;
                 civm.Quantity = product.Quantity;
                 civm.SubTotal = product.Quantity * prod.Price;
+                civm.DeliveryOption = _context.DeliveryOption.Where(x => x.Id == product.DeliveryOptionId).First();
                 total += civm.SubTotal;
                 cvm.CartItems = new List<CartItemViewModel>();
                 cvm.CartItems.Add(civm);
@@ -75,7 +76,7 @@ namespace FarmHouseDeliveryApp.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost] 
-        public async Task<IActionResult> Add([Bind("Id,ProductId,Quantity,DeliveryOptionsId")] ShoppingCartItem shoppingCartItem)
+        public async Task<IActionResult> Add([Bind("Id,ProductId,Quantity,DeliveryOptionId")] ShoppingCartItem shoppingCartItem)
         {
             if (ModelState.IsValid)
             {
