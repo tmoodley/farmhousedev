@@ -23,5 +23,21 @@ namespace FarmHouseDeliveryApp.Models.AccountViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string CCType { get; set; }
+        public string CreditCard { get; set; }
+        public string ExpDate { get; set; }
+        public string SecurityCode { get; set; }
+        public string Billing_Address { get; set; }
+        public string Billing_City { get; set; }
+        public string Billing_Province { get; set; }
+        public string Billing_PostalCode { get; set; }
+        public string Shipping_Address { get; set; }
+        public string Shipping_City { get; set; }
+        public string Shipping_Province { get; set; }
+        public string Shipping_PostalCode { get; set; }
+        public string Phone { get; set; }
     }
 }

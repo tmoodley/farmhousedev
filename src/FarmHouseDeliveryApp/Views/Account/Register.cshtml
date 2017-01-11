@@ -1,42 +1,169 @@
 ﻿@model RegisterViewModel
 @{
     ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LayoutSansMenu.cshtml";
 }
-@section Header{
-<h2>@ViewData["Title"].</h2>
 
-<form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-    <h4>Create a new account.</h4>
-    <hr />
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="Email" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+
+<div class="container">
+    <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+        <h4>Create a new account.</h4>
+        <hr /> 
+        <div class="row">
+            <!-- You can make it whatever width you want. I'm making it full width
+             on <= small devices and 4/12 page width on >= medium devices -->
+            <div class="col-xs-12 col-md-4">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <!-- CREDIT CARD FORM STARTS HERE -->
+                <div class="panel panel-default credit-card-box">
+                    <div class="panel-heading display-table">
+                        <div class="row display-tr">
+                            <h3 class="panel-title display-td">Payment Details</h3>
+                            <div class="display-td">
+                                <img class="img-responsive pull-right" src="~/images/cards.png">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="cardNumber">CARD NUMBER</label>
+                                    <div class="input-group">
+                                        <input type="tel"
+                                               class="form-control"
+                                               name="CreditCard"
+                                               placeholder="Valid Card Number"
+                                               autocomplete="cc-number"
+                                               required autofocus />
+                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-7 col-md-7">
+                                <div class="form-group">
+                                    <label for="cardExpiry"><span class="hidden-xs">EXPIRATION</span><span class="visible-xs-inline">EXP</span> DATE</label>
+                                    <input type="tel"
+                                           class="form-control"
+                                           name="ExpDate"
+                                           placeholder="MM / YY"
+                                           autocomplete="cc-exp"
+                                           required />
+                                </div>
+                            </div>
+                            <div class="col-xs-5 col-md-5 pull-right">
+                                <div class="form-group">
+                                    <label for="cardCVC">CV CODE</label>
+                                    <input type="tel"
+                                           class="form-control"
+                                           name="SecurityCode"
+                                           placeholder="CVC"
+                                           autocomplete="cc-csc"
+                                           required />
+                                </div>
+                            </div>
+                        </div>  
+
+                    </div>
+                </div>
+                <!-- CREDIT CARD FORM ENDS HERE -->
+
+
+            </div>
+
+            <div class="col-xs-12 col-md-8" style="font-size: 12pt; line-height: 2em;">
+
+                <!--SHIPPING METHOD-->
+                <div class="panel panel-info">
+                    <div class="panel-heading">Address</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <h4>Shipping Address</h4>
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <div class="col-md-6 col-xs-12">
+                                <strong>First Name:</strong>
+                                <input type="text" name="FirstName" class="form-control" value="" />
+                            </div>
+                            <div class="span1"></div>
+                            <div class="col-md-6 col-xs-12">
+                                <strong>Last Name:</strong>
+                                <input type="text" name="LastName" class="form-control" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12"><strong>Billing Address:</strong></div>
+                            <div class="col-md-12">
+                                <input type="text" name="Billing_Address" class="form-control" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12"><strong>Billing City:</strong></div>
+                            <div class="col-md-12">
+                                <input type="text" name="Billing_City" class="form-control" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12"><strong>Billing Province:</strong></div>
+                            <div class="col-md-12">
+                                <input type="text" name="Billing_Province" class="form-control" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12"><strong>Billing Postal Code:</strong></div>
+                            <div class="col-md-12">
+                                <input type="text" name="Billing_PostalCode" class="form-control" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12"><strong>Phone Number:</strong></div>
+                            <div class="col-md-12"><input type="text" name="Phone" class="form-control" value="" /></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12"><strong>Email Address:</strong></div>
+
+                            <div class="col-md-12">
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="Password" class="form-control" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="ConfirmPassword" class="form-control" />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="submit" class="subscribe btn btn-success btn-lg btn-block">Register</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--SHIPPING METHOD END-->
+                </div>
+
+            </div>
+
         </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="Password" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="ConfirmPassword" class="form-control" />
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-default">Register</button>
-        </div>
-    </div>
-</form>
-}
+    </form>
+</div>
+ 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

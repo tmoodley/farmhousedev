@@ -105,7 +105,25 @@ namespace FarmHouseDeliveryApp.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName, 
+                    CCType = model.CCType,
+                    CreditCard = model.CreditCard,
+                    ExpDate = model.ExpDate,
+                    SecurityCode = model.SecurityCode,
+                    Billing_Address = model.Billing_Address,
+                    Billing_City = model.Billing_City,
+                    Billing_Province = model.Billing_Province,
+                    Billing_PostalCode = model.Billing_PostalCode,
+                    Shipping_Address = model.Shipping_Address,
+                    Shipping_City = model.Shipping_City,
+                    Shipping_Province = model.Shipping_Province,
+                    Shipping_PostalCode = model.Shipping_PostalCode,
+                    Phone = model.Phone
+            };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
